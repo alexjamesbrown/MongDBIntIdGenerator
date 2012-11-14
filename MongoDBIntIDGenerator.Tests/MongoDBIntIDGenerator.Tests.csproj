@@ -8,8 +8,8 @@
     <ProjectGuid>{00DD1EDF-0549-4805-BE93-9B45C64F4C09}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MongoDBIntIDGenerator.Tests</RootNamespace>
-    <AssemblyName>MongoDBIntIDGenerator.Tests</AssemblyName>
+    <RootNamespace>MongoDBIntIdGenerator.Tests</RootNamespace>
+    <AssemblyName>MongoDBIntIdGenerator.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -54,9 +54,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MongoDBIntIDGenerator\MongoDBIntIDGenerator.csproj">
+    <ProjectReference Include="..\MongoDBIntIdGenerator\MongoDBIntIdGenerator.csproj">
       <Project>{5310FD26-C517-4C35-A6A8-CE35BDF9FF2D}</Project>
-      <Name>MongoDBIntIDGenerator</Name>
+      <Name>MongoDBIntIdGenerator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

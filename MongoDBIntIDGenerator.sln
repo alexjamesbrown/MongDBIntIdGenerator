@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDBIntIDGenerator", "MongoDBIntIDGenerator\MongoDBIntIDGenerator.csproj", "{5310FD26-C517-4C35-A6A8-CE35BDF9FF2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDBIntIdGenerator", "MongoDBIntIdGenerator\MongoDBIntIdGenerator.csproj", "{5310FD26-C517-4C35-A6A8-CE35BDF9FF2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDBIntIDGenerator.Tests", "MongoDBIntIDGenerator.Tests\MongoDBIntIDGenerator.Tests.csproj", "{00DD1EDF-0549-4805-BE93-9B45C64F4C09}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDBIntIdGenerator.Tests", "MongoDBIntIdGenerator.Tests\MongoDBIntIdGenerator.Tests.csproj", "{00DD1EDF-0549-4805-BE93-9B45C64F4C09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
