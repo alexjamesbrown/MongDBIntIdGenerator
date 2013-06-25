@@ -8,19 +8,19 @@ namespace MongoDBIntIdGenerator
     {
         public object GenerateId(object container, object document)
         {
-            var idSequenceCollection = ((MongoCollection)container).Database.GetCollection("IDSequence");
+            var idSequenceCollection = ((MongoCollection)container).Database.GetCollection("IDInt64Sequence2");
 
             var query = Query.EQ("_id", ((MongoCollection)container).Name);
 
             return idSequenceCollection
-                .FindAndModify(query, null, Update.Inc("seq", 1), true, true)
+                .FindAndModify(query, null, Update.Inc("seq", 1L), true, true)
                 .ModifiedDocument["seq"]
-                .AsInt32;
+                .AsInt64;
         }
 
         public bool IsEmpty(object id)
         {
-            return (int)id == 0;
+            return (long)id == 0;
         }
     }
 }
