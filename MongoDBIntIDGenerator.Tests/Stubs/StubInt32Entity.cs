@@ -1,11 +1,11 @@
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace MongoDBIntIdGenerator.Tests
+namespace MongoDBIntIdGenerator.Tests.Stubs
 {
-    public class MyTestEntity
+    public class StubInt32Entity
     {
-        [BsonId(IdGenerator = typeof(IntIdGenerator<BsonInt32>))]
+        [BsonId(IdGenerator = typeof(Int32IdGenerator))]
         public int Id { get; set; }
         public string Name { get; set; }
     }

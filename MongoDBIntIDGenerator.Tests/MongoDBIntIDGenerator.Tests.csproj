@@ -47,9 +47,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MongoDBIntIdGeneratorTest.cs" />
-    <Compile Include="MyTestEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stubs\StubInt32Entity.cs" />
+    <Compile Include="Stubs\StubInt64Entity.cs" />
+    <Compile Include="Int32IdGeneratorTest.cs" />
+    <Compile Include="Int64IdGeneratorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -69,4 +71,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Stubs\" />
+  </ItemGroup>
 </Project>
