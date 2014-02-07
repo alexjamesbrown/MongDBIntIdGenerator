@@ -11,10 +11,10 @@ Some unit tests are included, however this is not yet tested on scale, with repl
 
     BsonClassMap.RegisterClassMap<MyClass>(cm => {
         cm.AutoMap();
-        cm.IdMemberMap.SetIdGenerator(new IntId32Generator());
+        cm.IdMemberMap.SetIdGenerator(new Int32IdGenerator());
     });
 
 	BsonClassMap.RegisterClassMap<MyClass>(cm => {
         cm.AutoMap();
-        cm.IdMemberMap.SetIdGenerator(new IntId64Generator());
+        cm.IdMemberMap.SetIdGenerator(new Int64IdGenerator());
     });
