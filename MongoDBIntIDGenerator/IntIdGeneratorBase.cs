@@ -67,9 +67,13 @@ namespace MongoDBIntIdGenerator
 
 			var query = Query.EQ("_id", ((MongoCollection)container).Name);
 
-			return ConvertToInt(idSequenceCollection
-			        .FindAndModify (query, null, CreateUpdateBuilder (), true, true)
-					.ModifiedDocument ["seq"]);              
+			return ConvertToInt(idSequenceCollection.FindAndModify(new FindAndModifyArgs()
+            		{
+		                Query = query,
+		                Update = CreateUpdateBuilder(),
+		                VersionReturned = FindAndModifyDocumentVersion.Modified,
+		                Upsert = true
+            		}).ModifiedDocument["seq"]);              
 		}
 		#endregion
 	}
