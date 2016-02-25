@@ -1,17 +1,17 @@
 using System;
 using MongoDB.Bson;
-using MongoDB.Driver.Builders;
+using MongoDB.Driver;
 
 namespace MongoDBIntIdGenerator
 {
-	/// <summary>
-	/// Int64 identifier generator.
-	/// </summary>
-	public sealed class Int64IdGenerator : IntIdGeneratorBase
+    /// <summary>
+    /// Int64 identifier generator.
+    /// </summary>
+    public sealed class Int64IdGenerator<T> : IntIdGeneratorBase<T> where T : class
 	{
 		#region Constructors
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MongoDBIntIdGenerator.Int64IdGenerator"/> class.
+		/// Initializes a new instance of the class.
 		/// </summary>
 		/// <param name="idCollectionName">Identifier collection name.</param>
 		public Int64IdGenerator(string idCollectionName) : base(idCollectionName)
@@ -19,7 +19,7 @@ namespace MongoDBIntIdGenerator
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MongoDBIntIdGenerator.Int64IdGenerator"/> class.
+		/// Initializes a new instance of the class.
 		/// </summary>
 		public Int64IdGenerator() : base("IdInt64")
 		{
@@ -31,10 +31,10 @@ namespace MongoDBIntIdGenerator
 		/// Creates the update builder.
 		/// </summary>
 		/// <returns>The update builder.</returns>
-		protected override UpdateBuilder CreateUpdateBuilder ()
+		protected override UpdateDefinition<BsonDocument> CreateUpdateBuilder ()
 		{
-			return Update.Inc ("seq", 1L);
-		}
+            return Builders<BsonDocument>.Update.Inc("seq", 1L);
+        }
 
 		/// <summary>
 		/// Converts to int.
@@ -43,6 +43,9 @@ namespace MongoDBIntIdGenerator
 		/// <param name="value">Value.</param>
 		protected override object ConvertToInt (BsonValue value)
 		{
+            if (value.BsonType == BsonType.Int32)
+                return (Int64) value.AsInt32;
+
 			return value.AsInt64;
 		}
 

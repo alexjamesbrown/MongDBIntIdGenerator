@@ -1,19 +1,17 @@
-﻿using MongoDB.Bson.Serialization;
-using MongoDB.Driver;
-using MongoDB.Driver.Builders;
+﻿using MongoDB.Driver;
 using MongoDB.Bson;
 using System;
 
 namespace MongoDBIntIdGenerator
 {
-	/// <summary>
-	/// Int32 identifier generator.
-	/// </summary>
-    public class Int32IdGenerator : IntIdGeneratorBase
+    /// <summary>
+    /// Int32 identifier generator.
+    /// </summary>
+    public class Int32IdGenerator<T> : IntIdGeneratorBase<T> where T : class
     {
 		#region Constructors
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MongoDBIntIdGenerator.Int32IdGenerator"/> class.
+		/// Initializes a new instance of the class.
 		/// </summary>
 		/// <param name="idCollectionName">Identifier collection name.</param>
 		public Int32IdGenerator(string idCollectionName) : base(idCollectionName)
@@ -21,8 +19,9 @@ namespace MongoDBIntIdGenerator
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MongoDBIntIdGenerator.Int32IdGenerator"/> class.
+		/// Initializes a new instance of the class.
 		/// </summary>
+        /// 
 		public Int32IdGenerator() : base("IdInt32")
 		{
 		}
@@ -33,10 +32,10 @@ namespace MongoDBIntIdGenerator
 		/// Creates the update builder.
 		/// </summary>
 		/// <returns>The update builder.</returns>
-		protected override UpdateBuilder CreateUpdateBuilder ()
+		protected override UpdateDefinition<BsonDocument> CreateUpdateBuilder ()
 		{
-			return Update.Inc ("seq", 1); 
-		}
+            return Builders<BsonDocument>.Update.Inc("seq", 1);
+        }
 
 		/// <summary>
 		/// Converts to int.
