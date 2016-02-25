@@ -1,33 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MongoDB.Driver;
 using NUnit.Framework;
 using MongoDBIntIdGenerator.Tests.Stubs;
+using MongoDB.Bson;
 
 namespace MongoDBIntIdGenerator.Tests
 {
     [TestFixture]
     public class Int32IdGeneratorTest
     {
-        private MongoDatabase _db;
+        private IMongoClient _client;
+        private IMongoDatabase _db;
+        private const string database = "test";
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void TestFixtureSetUp()
         {
-			_db = new MongoClient("mongodb://localhost/?safe=true")
-                .GetServer()
-                .GetDatabase("test");
+            _client = new MongoClient("mongodb://localhost/?safe=true");
+                
+            _db = _client.GetDatabase(database);
 
 			// Keep the collection clear for the tests.
-			_db.GetCollection ("IdInt32").RemoveAll ();
+			_db.GetCollection<BsonDocument>("IdInt32").RemoveAll();
         }
 
         [SetUp]
         public void SetUp()
         {
-            _db.Drop();
+            _client.DropDatabase(database);
         }
 
         [Test]
@@ -35,7 +36,7 @@ namespace MongoDBIntIdGenerator.Tests
         {
             var item = new StubInt32Entity { Name = "Testing" };
 
-            _db.GetCollection<StubInt32Entity>("testEntities").Save(item);
+            _db.GetCollection<StubInt32Entity>("testEntities").Insert(item);
 
             Assert.AreEqual(1, item.Id);
         }
@@ -46,8 +47,8 @@ namespace MongoDBIntIdGenerator.Tests
             var item1 = new StubInt32Entity { Name = "Testing" };
             var item2 = new StubInt32Entity { Name = "Testing 2" };
 
-            _db.GetCollection<StubInt32Entity>("testEntities").Save(item1);
-            _db.GetCollection<StubInt32Entity>("testEntities").Save(item2);
+            _db.GetCollection<StubInt32Entity>("testEntities").Insert(item1);
+            _db.GetCollection<StubInt32Entity>("testEntities").Insert(item2);
 
             Assert.AreEqual(2, item2.Id);
         }
@@ -60,7 +61,7 @@ namespace MongoDBIntIdGenerator.Tests
             for (int i = 0; i < 1000; i++)
                 items.Add(new StubInt32Entity { Name = "Item " + i });
 
-            _db.GetCollection<StubInt32Entity>("testEntities").InsertBatch(items);
+            _db.GetCollection<StubInt32Entity>("testEntities").InsertMany(items);
 
             for (var i = 1; i < 1001; i++)
                 Assert.That(items.Select(x => x.Id).Contains(i));

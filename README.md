@@ -1,5 +1,6 @@
 MongoDBIntIdGenerator
 =====================
+(This repository is to support new MongoDB Driver (Version 2.*) - https://www.nuget.org/packages/MongoDB.Driver/)
 
 MongoDB Sequential integer Id Generator - Uses findAndModify to create sequential id's
 
@@ -18,3 +19,5 @@ Some unit tests are included, however this is not yet tested on scale, with repl
         cm.AutoMap();
         cm.IdMemberMap.SetIdGenerator(new Int64IdGenerator());
     });
+
+
