@@ -5,29 +5,30 @@ using System.Text;
 using MongoDB.Driver;
 using NUnit.Framework;
 using MongoDBIntIdGenerator.Tests.Stubs;
+using MongoDB.Bson;
 
 namespace MongoDBIntIdGenerator.Tests
 {
     [TestFixture]
     public class Int64IdGeneratorTest
     {
-        private MongoDatabase _db;
+        private IMongoDatabase _db;
+        private MongoClient _client;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-			_db = new MongoClient("mongodb://localhost/?safe=true")
-				.GetServer()
-				.GetDatabase("test");
+            _client = new MongoClient("mongodb://localhost/?safe=true");
+            _db = _client.GetDatabase("test");
 
 			// Keep the collection clear for the tests.
-			_db.GetCollection ("IdInt64").RemoveAll ();
+			_db.GetCollection<BsonDocument> ("IdInt64").DeleteMany(new BsonDocument());
         }
 
         [SetUp]
         public void SetUp()
         {
-            _db.Drop();
+            _client.DropDatabase("test");
         }
 
         [Test]
@@ -35,7 +36,7 @@ namespace MongoDBIntIdGenerator.Tests
         {
             var item = new StubInt64Entity { Name = "Testing" };
 
-            _db.GetCollection<StubInt64Entity>("testEntities").Save(item);
+            _db.GetCollection<StubInt64Entity>("testEntities").InsertOne(item);
 
             Assert.AreEqual(1, item.Id);
         }
@@ -46,8 +47,8 @@ namespace MongoDBIntIdGenerator.Tests
             var item1 = new StubInt64Entity { Name = "Testing" };
             var item2 = new StubInt64Entity { Name = "Testing 2" };
 
-            _db.GetCollection<StubInt64Entity>("testEntities").Save(item1);
-            _db.GetCollection<StubInt64Entity>("testEntities").Save(item2);
+            _db.GetCollection<StubInt64Entity>("testEntities").InsertOne(item1);
+            _db.GetCollection<StubInt64Entity>("testEntities").InsertOne(item2);
 
             Assert.AreEqual(2, item2.Id);
         }
@@ -60,7 +61,7 @@ namespace MongoDBIntIdGenerator.Tests
             for (int i = 0; i < 1000; i++)
                 items.Add(new StubInt64Entity { Name = "Item " + i });
 
-            _db.GetCollection<StubInt64Entity>("testEntities").InsertBatch(items);
+            _db.GetCollection<StubInt64Entity>("testEntities").InsertMany(items);
 
             for (var i = 1; i < 1001; i++)
                 Assert.That(items.Select(x => x.Id).Contains(i));
